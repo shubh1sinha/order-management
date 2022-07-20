@@ -1,2 +1,2 @@
 # order-management
- mini-rpoject
+ mini-project
