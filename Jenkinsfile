@@ -1,5 +1,9 @@
 pipeline{
     agent any
+    	environment {
+		DOCKERHUB_CREDENTIALS=credentials('docker-cred')
+	}
+
     stages{
         stage("compile"){
             steps{
@@ -18,22 +22,26 @@ pipeline{
             bat "docker build -t shubh1sinha/order-management:latest ."
             }
         }
-        stage('Push') {
+		stage('Login') {
 
 			steps {
-			withCredentials([string(credentialsId: 'shubh1sinha', variable: 'dockerpwd')]) {
-    // some block
-                    bat 'docker login -u shubh1sinha -p ${dockerpwd}'
-
-                    bat 'docker push shubh1sinha/order-management:1.0'
-                }
+				bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
-	}
-	post {
+
+		stage('Push') {
+
+			steps {
+				bat 'docker push order-management:latest'
+			}
+		}
+
+		}
+
+        	post {
 		always {
-			bat 'docker logout'
+			sh 'docker logout'
 		}
 	}
-}
+	}
    
