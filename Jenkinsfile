@@ -19,7 +19,7 @@ pipeline{
         
         stage("docker_build"){
             steps{
-            bat "docker build -t shubh1sinha/order-management:latest ."
+            bat "docker build -t order-management:latest ."
             }
         }
 		stage('Login') {
