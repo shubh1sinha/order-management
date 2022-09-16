@@ -1,11 +1,6 @@
 pipeline{
     agent any
     stages{
-        stage("checkout"){
-            steps{
-                git "https://github.com/shubh1sinha/OrderManagement.git"
-            }
-        }
         stage("compile"){
             steps{
             sh "mvn clean compile"
