@@ -27,7 +27,12 @@ pipeline{
         stage('Push') {
 
 			steps {
-			bat "docker push shubh1sinha/order-management:latest"
+			withCredentials([string(credentialsId: 'shubh1sinha', variable: 'dockerpwd')]) {
+    // some block
+                    bat 'docker login -u shubh1sinha -p ${dockerpwd}'
+
+                    bat 'docker push shubh1sinha/order-management:1.0'
+                }
 			}
 		}
 	}
