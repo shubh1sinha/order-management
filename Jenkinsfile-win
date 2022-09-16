@@ -8,21 +8,34 @@ pipeline{
         }
         stage("compile"){
             steps{
-            bat "mvn clean compile"
+            sh "mvn clean compile"
             }
         }
         
          stage("package"){
             steps{
-            bat "mvn package"
+            sh "mvn clean package"
             }
         }
         
         stage("docker_build"){
             steps{
-            bat "docker build -t shubh1sinha/myapp:$BUILD_NUMBER ."
+            sh "docker build -t shubh1sinha/order-management:latest ."
             }
         }
+		stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+        stage('Push') {
+
+			steps {
+			sh "docker push shubh1sinha/order-management:latest"
+			}
+		}
+	}
     }
    
 }
