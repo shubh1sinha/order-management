@@ -25,14 +25,16 @@ pipeline{
 		stage('Login') {
 
 			steps {
-				bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				withCredentials([string(credentialsId: 'shubh1sinha', variable: 'dockerpwd')]) {
+					bat 'docker login -u shubh1sinha -p ${dockerpwd}'
+				}
 			}
 		}
 
 		stage('Push') {
 
 			steps {
-				bat 'docker push order-management:latest'
+				bat 'docker push shubh1sinha/order-management:latest'
 			}
 		}
 
