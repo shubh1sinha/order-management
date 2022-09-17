@@ -6,9 +6,9 @@ pipeline {
   }
   agent any
   stages {
-    stage('Cloning Git') {
+    stage('package') {
       steps {
-        git 'https://github.com/shubh1sinha/order-management.git'
+        sh "mvn clean package"
       }
     }
     stage('Building image') {
