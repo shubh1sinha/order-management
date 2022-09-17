@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('package') {
       steps {
-        sh "mvn clean package"
+        bat "mvn clean package"
       }
     }
     stage('Building image') {
@@ -29,7 +29,7 @@ pipeline {
     }
     stage('Logout') {
       steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        bat "docker rmi $registry:$BUILD_NUMBER"
       }
     }
   }
