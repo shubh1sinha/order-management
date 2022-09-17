@@ -1,28 +1,9 @@
-pipeline{
-    agent any
-    	environment {
-		DOCKERHUB_CREDENTIALS=credentials('docker-cred')
-	}
-
-    stages{
-        stage("compile"){
-            steps{
-            sh "mvn clean compile"
-            }
-        }
-        
-         stage("package"){
-            steps{
-            sh "mvn clean package"
-            }
-        }
-        
-        stages {
+stages {
 
 		stage('Build') {
 
 			steps {
-				sh 'docker build -t shubh1sinha/order-management:latest .'
+				sh 'docker build -t bharathirajatut/nodeapp:latest .'
 			}
 		}
 
@@ -36,16 +17,14 @@ pipeline{
 		stage('Push') {
 
 			steps {
-				sh 'docker push shubh1sinha/order-management:latest'
+				sh 'docker push bharathirajatut/nodeapp:latest'
 			}
 		}
-	}
+
 
 	post {
 		always {
 			sh 'docker logout'
 		}
 	}
-
-	}
-}
+    }
