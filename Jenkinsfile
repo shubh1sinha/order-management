@@ -25,9 +25,9 @@ pipeline{
 		stage('Login') {
 
 			steps {
-				withCredentials([string(credentialsId: 'shubh1sinha', variable: 'dockerpwd')]) {
-					bat 'docker login -u shubh1sinha -p ${dockerpwd}'
-				}
+				
+					bat 'echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin'
+				
 			}
 		}
 
