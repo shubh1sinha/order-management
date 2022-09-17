@@ -27,10 +27,10 @@ pipeline {
         }
       }
     }
-        	post {
-		always {
-			bat 'docker logout'
-		}
-	}
+    stage('Logout') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }
   }
 }
