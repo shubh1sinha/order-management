@@ -1,48 +1,36 @@
-pipeline{
-    agent any
-    	environment {
-		DOCKERHUB_CREDENTIALS=credentials('docker-cred')
-	}
-
-    stages{
-        stage("compile"){
-            steps{
-            bat "mvn clean compile"
-            }
+pipeline {
+  environment {
+    registry = "shubh1sinha/order-management"
+    registryCredential = 'docker-cred'
+    dockerImage = ''
+  }
+  agent any
+  stages {
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/shubh1sinha/order-management.git'
+      }
+    }
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
-        
-         stage("package"){
-            steps{
-            bat "mvn clean package"
-            }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
         }
-        
-        stage("docker_build"){
-            steps{
-            bat "docker build -t shubh1sinha/order-management:latest ."
-            }
-        }
-		stage('Login') {
-			steps{
-    						bat 'docker login -u username -p password'
-					
-				
-			}
-		}
-
-		stage('Push') {
-
-			steps {
-				bat 'docker push shubh1sinha/order-management:latest'
-			}
-		}
-
-		}
-
+      }
+    }
         	post {
 		always {
 			bat 'docker logout'
 		}
 	}
-	}
-   
+  }
+}
