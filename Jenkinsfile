@@ -13,9 +13,9 @@ pipeline {
     }
     stage('Building image') {
       steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
+            steps{
+            bat "docker build -t $registry:latest ."
+            }
       }
     }
     stage('Deploy Image') {
@@ -29,7 +29,7 @@ pipeline {
     }
     stage('Logout') {
       steps{
-        bat "docker rmi $registry:$BUILD_NUMBER"
+        bat "docker rmi $registry:$latest"
       }
     }
   }
