@@ -32,7 +32,7 @@ pipeline{
 		stage('Push') {
 
 			steps {
-				bat 'docker push order-management:latest'
+				bat 'sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
 
