@@ -7,41 +7,45 @@ pipeline{
     stages{
         stage("compile"){
             steps{
-            bat "mvn clean compile"
+            sh "mvn clean compile"
             }
         }
         
          stage("package"){
             steps{
-            bat "mvn clean package"
+            sh "mvn clean package"
             }
         }
         
-        stage("docker_build"){
-            steps{
-            bat "docker build -t order-management:latest ."
-            }
-        }
+        stages {
+
+		stage('Build') {
+
+			steps {
+				sh 'docker build -t shubh1sinha/order-management:latest .'
+			}
+		}
+
 		stage('Login') {
 
 			steps {
-				bat 'docker login env
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
 
 		stage('Push') {
 
 			steps {
-				bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				sh 'docker push shubh1sinha/order-management:latest'
 			}
 		}
+	}
 
-		}
-
-        	post {
+	post {
 		always {
 			sh 'docker logout'
 		}
 	}
+
 	}
    
