@@ -8,21 +8,28 @@ pipeline{
         }
         stage("compile"){
             steps{
-            bat "mvn clean compile"
+            sh "mvn clean compile"
             }
         }
         
          stage("package"){
             steps{
-            bat "mvn package"
+            sh "mvn clean package"
             }
         }
         
         stage("docker_build"){
             steps{
-            bat "docker build -t shubh1sinha/myapp:$BUILD_NUMBER ."
+            sh "docker build -t shubh1sinha/order-management:1.0 ."
             }
         }
+		stage('Run') {
+
+			steps {
+				sh 'docker-compose up'
+			}
+		}
+	}
     }
    
 }
