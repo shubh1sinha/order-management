@@ -20,11 +20,11 @@ pipeline {
     }
     stage('Deploy Image') {
       steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
-        }
+      steps{
+            steps{
+            bat "docker-compose up"
+            }
+      }
       }
     }
     stage('Logout') {
