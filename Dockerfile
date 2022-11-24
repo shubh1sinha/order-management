@@ -1,5 +1,5 @@
 FROM openjdk:11
 ARG JAR_FILE
-ADD ${JAR_FILE} /home/app.jar
+ADD ${JAR_FILE} /home/order-managemt-1.0.jar
 WORKDIR /home/
-CMD java -jar app.jar
+CMD java -jar order-managemt-1.0.jar
