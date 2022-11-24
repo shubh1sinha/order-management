@@ -1,36 +1,34 @@
-pipeline {
-  environment {
-    registry = "shubh1sinha/order-management"
-    registryCredential = 'docker-cred'
-    dockerImage = ''
-  }
-  agent any
-  stages {
-    stage('package') {
-      steps {
-        bat "mvn clean package"
-      }
-    }
-    stage('Building image') {
-      steps{
+pipeline{
+    agent any
+    stages{
+        stage("checkout"){
             steps{
-            bat "docker build -t $registry:latest ."
+                bat "git clone https://github.com/shubh1sinha/order-management.git"
             }
-      }
-    }
-    stage('Deploy Image') {
-      steps{
-      steps{
+        }
+        stage("compile"){
             steps{
-            bat "docker-compose up"
+            bat "mvn clean compile"
             }
-      }
-      }
+        }
+        
+         stage("package"){
+            steps{
+            bat "mvn clean package"
+            }
+        }
+        
+        stage("docker_build"){
+            steps{
+            bat "docker build -t shubh1sinha/order-management:1.0 ."
+            }
+        }
+		stage('Run') {
+
+			steps {
+				bat 'docker run -d -p 80:80 shubh1sinha/order-management:1.0'
+			}
+		}
+	}
     }
-    stage('Logout') {
-      steps{
-        bat "docker rmi $registry:$latest"
-      }
-    }
-  }
-}
+  
