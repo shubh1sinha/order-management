@@ -1,4 +1,5 @@
 FROM openjdk:11
-WORKDIR /home/app
-COPY . /home/app/
+ARG JAR_FILE
+ADD ${JAR_FILE} /home/app.jar
+WORKDIR /home/
 CMD ["java","-jar","app.jar"]
