@@ -1,0 +1,9 @@
+version: '3'
+services:   
+  order-management:
+    image: shubh1sinha/order-management:1.0
+    container_name: order-management
+    expose:
+    - "8181"
+    ports: 
+    - 8181:8181

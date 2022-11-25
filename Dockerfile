@@ -1,5 +1,6 @@
 FROM openjdk:11
 ARG JAR_FILE
-COPY ${JAR_FILE} /home/app.jar
+ENV JAVA_OPTS=""
+ADD ${JAR_FILE} /home/app.jar
 WORKDIR /home/
-CMD ["java","-jar","/app.jar"]
+CMD java -jar $JAVA_OPTS app.jar
