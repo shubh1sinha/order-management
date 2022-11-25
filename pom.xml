@@ -40,7 +40,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>shubh1sinha/order-management</finalName>
+		<finalName>order-management</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
