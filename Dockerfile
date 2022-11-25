@@ -1,5 +1,6 @@
 FROM openjdk:11
 ARG JAR_FILE
-ADD ${JAR_FILE} /home/app
+ENV JAVA_OPTS=""
+ADD ${JAR_FILE} /home/app.jar
 WORKDIR /home/
-CMD java -jar order-managemt-1.0.jar
+CMD java -jar $JAVA_OPTS app.jar
