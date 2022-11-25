@@ -26,7 +26,7 @@ pipeline{
 		stage('Run') {
 
 			steps {
-				bat 'docker run -d -p 8080:8080 shubh1sinha/order-management:1.0'
+				bat 'docker run -d -p 8081:8081 shubh1sinha/order-management:1.0'
 			}
 		}
 	}
