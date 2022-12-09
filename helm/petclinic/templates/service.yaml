@@ -1,0 +1,16 @@
+# Service - LoadBalancer
+# # pb-service -lb.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-management-service
+  labels:
+    app: order-app
+spec:
+  selector:
+    app: order-app
+  type: LoadBalancer
+  ports:
+  - nodePort: 32751
+    port: 80
+    targetPort: 8181

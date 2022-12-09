@@ -3,33 +3,21 @@ pipeline{
     stages{
         stage("checkout"){
             steps{
-                git "https://github.com/shubh1sinha/OrderManagement.git"
-            }
-        }
-        stage("compile"){
-            steps{
-            sh "mvn clean compile"
+                bat "git clone https://github.com/shubh1sinha/order-management.git"
             }
         }
         
          stage("package"){
             steps{
-            sh "mvn clean package"
+            bat "mvn clean package"
             }
         }
-        
-        stage("docker_build"){
-            steps{
-            sh "docker build -t shubh1sinha/order-management:1.0 ."
-            }
-        }
-		stage('Run') {
+		stage('Docker Run') {
 
 			steps {
-				sh 'docker-compose up'
+				bat 'docker-compose up'
 			}
 		}
 	}
     }
-   
-}
+  

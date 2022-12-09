@@ -1,23 +1,15 @@
-pipeline{
-    agent any
-    stages{
-        stage("checkout"){
-            steps{
-                bat "git clone https://github.com/shubh1sinha/order-management.git"
-            }
+pipeline {
+	agent any
+    stages {
+        stage('Build on k8 ') {
+            steps {           
+                        sh 'pwd'
+                        sh 'cp -R helm/* .'
+		        sh 'ls -ltr'
+                        sh 'pwd'
+                        sh '/usr/local/bin/helm upgrade --install order-management petclinic  --set image.repository=registry.hub.docker.com/shubh1sinha/order-management --set image.tag=1.0'
+              			
+            }           
         }
-        
-         stage("package"){
-            steps{
-            bat "mvn clean package"
-            }
-        }
-		stage('Docker Run') {
-
-			steps {
-				bat 'docker-compose up'
-			}
-		}
-	}
     }
-  
+}
