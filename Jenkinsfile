@@ -5,7 +5,7 @@ pipeline {
         stage('Build maven ') {
             steps { 
                     sh 'pwd'      
-                    sh 'sudo /home/ec2-user/apache-maven-3.8.6/bin/mvn  clean install package'
+                    sh 'sudo /home/shusinha5/apache-maven-3.8.6/bin/mvn  clean install package'
             }
         }
          
