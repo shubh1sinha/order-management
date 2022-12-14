@@ -12,12 +12,9 @@ pipeline {
         stage('Build docker image') {
            steps {
 		   
-			sh 'sudo docker tag order-management:2.0 shubh1sinha/order-management:2.0'
-			
-               script {         
-                 docker.withRegistry('https://hub.docker.com/', 'dockerhub') {
-                   sh 'sudo docker push shubh1sinha/order-management:2.0'
-                 }                     
+			sh 'sudo docker tag order-management:2.0 shubh1sinha/order-management:2.0'       
+            sh 'sudo docker push shubh1sinha/order-management:2.0'
+                                      
            }
         }
 	  }
