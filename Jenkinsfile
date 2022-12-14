@@ -1,15 +1,25 @@
 pipeline {
-	agent any
-    stages {
-        stage('Build on k8 ') {
-            steps {           
-                        sh 'pwd'
-                        sh 'cp -R helm/* .'
-		        sh 'ls -ltr'
-                        sh 'pwd'
-                        sh '/usr/local/bin/helm upgrade --install order-management petclinic  --set image.repository=registry.hub.docker.com/shubh1sinha/order-management --set image.tag=1.0'
-              			
-            }           
+  agent any
+  
+    stages {      
+        stage('Build maven ') {
+            steps { 
+                    sh 'pwd'      
+                    sh 'sudo mvn  clean install package'
+            }
         }
+         
+        stage('Build docker image') {
+           steps {
+		   
+			sh 'sudo docker tag order-management:2.0 shubh1sinha/order-management:2.0'
+			
+               script {         
+                 docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                   sh 'sudo docker push shubh1sinha/order-management:2.0'
+                 }                     
+           }
+        }
+	  }
     }
 }
